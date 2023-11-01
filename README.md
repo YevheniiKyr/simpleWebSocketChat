@@ -2,13 +2,19 @@
 
 ## Description
 This app is a simple chat on sockets. 
+
 There is home page when user can input his name.
+
 Then user can create new room or join to existing one. 
+
 Users can communicate in real-time.
 
 ## Technologies
+
 server: Node js
+
 client: React, store: MobX
+
 interaction: Socket IO
 
 ## Demonstration
@@ -19,9 +25,9 @@ interaction: Socket IO
 ### Join room modal 
 ![image](https://github.com/YevheniiKyr/simpleWebSocketChat/assets/84139553/820379c2-b709-4cba-b464-71fd0fcb577e)
 ### Chat
-![image](https://github.com/YevheniiKyr/simpleWebSocketChat/assets/84139553/94a18393-d34c-4a81-9f17-4643642ce228)
-
+![image](https://github.com/YevheniiKyr/simpleWebSocketChat/assets/84139553/257a7604-e69a-4408-ac51-1e98df2c7e3c)
 
 
 ## What did I learn
+
 - real-time client-server interaction with Socket IO
