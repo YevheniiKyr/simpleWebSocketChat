@@ -10,12 +10,15 @@ import Chat from "./pages/chat_page";
 
 function App() {
 
-    const {socketStore} = useContext(Context)
+    const {socketStore, userStore} = useContext(Context)
 
     useEffect(() => {
-        const socket = io.connect('http://localhost:5000');
+        const socket = io.connect('http://localhost:5000', {'multiplex': false});
         socketStore.setSocket(socket)
+
     }, [])
+
+
 
     return (
         <div className="App">

@@ -1,0 +1,44 @@
+.author_message_container {
+    display: flex;
+    justify-content: end;
+    margin: 1.2rem;
+}
+
+.not_author_message_container {
+    display: flex;
+    justify-content: start;
+    margin: 1.2rem;
+}
+
+.message {
+    width: 20%;
+    display: flex;
+    align-items: flex-start;
+    padding: 0.3rem;
+    background-color: #a3deea;
+    border: none;
+}
+
+.message_input {
+
+    border-radius: 10px;
+    padding: 0.5rem;
+    width: 40%;
+    resize: none;
+}
+
+.title {
+margin-top: 0.5rem;
+}
+.send_message_container {
+
+}
+.page_container{
+    height: 80vh;
+    display: block;
+}
+
+
+
+
+

@@ -1,0 +1,28 @@
+.my_button {
+    color: black;
+    background: #d9deea;
+    border-radius: 20px;
+    padding: 0.1rem;
+    width: 5rem;
+    height: 3rem;
+}
+
+.my_button_small {
+    csolor: black;
+    background: white;
+    border-radius: 20px;
+    padding: 0.2rem;
+    width: 4.5rem;
+    height: 2rem;
+}
+
+.my_input {
+    border-radius: 10px;
+    padding: 0.3rem;
+    width: 25%;
+    height: 5%;
+}
+
+.center {
+    text-align: center;
+}

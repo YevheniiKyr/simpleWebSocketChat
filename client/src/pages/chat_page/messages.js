@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MessageItem from "./messageItem";
 
 const Messages = ({messages}) => {
+
     return (
         <div>
             {
                 messages.map(message => (
-                    <MessageItem message = {message} key = {message.id}/>
+                    <MessageItem message={message} key={message.id}/>
                 ))
             }
         </div>

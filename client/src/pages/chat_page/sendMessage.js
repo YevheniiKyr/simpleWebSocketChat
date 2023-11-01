@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Context} from "../../index";
 import {useParams} from "react-router-dom";
-import styles from '../home/styles.module.css'
+import styles from './styles.module.css'
 
 const SendMessage = () => {
     const {socketStore, userStore} = useContext(Context)
@@ -11,27 +11,35 @@ const SendMessage = () => {
     function send() {
         const socket = socketStore.socket
         const user = userStore.user
-        console.log("USER", user)
-        socket.emit('message', {
-            id: Date.now(), user: user, text: text, roomId: id
-        })
+        const message = {
+            id: Date.now(),
+            user: user,
+            text: text,
+            roomId: id
+        }
+        console.log(message)
+        console.log(socket)
 
+        socket.emit('message', message)
     }
 
-    return (<div style={{display: "block", marginTop: '1rem'}}>
+    return (
+        <div className={`${styles.send_message_container}`}>
                 <textarea
+                    className={styles.message_input}
                     placeholder="write text here"
                     value={text}
-                    rows={5}
-                    style={{borderRadius: '10px', padding: '0.5rem', width: '60%'}}
+                    rows={2}
+
                     onChange={(e) => {
                         setText(e.target.value)
                     }}
 
                 />
-        <br></br>
-        <button onClick={send} className={styles.my_button}> Send</button>
-    </div>);
+            <br></br>
+            <button onClick={send} className={"my_button"}> Send</button>
+        </div>
+    );
 };
 
 export default SendMessage;
