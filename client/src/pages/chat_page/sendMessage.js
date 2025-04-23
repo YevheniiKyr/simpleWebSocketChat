@@ -4,27 +4,25 @@ import {useParams} from "react-router-dom";
 import styles from './styles.module.css'
 
 const SendMessage = () => {
-    const {socketStore, userStore} = useContext(Context)
+    const {socketStore} = useContext(Context)
     const {id} = useParams()
     const [text, setText] = useState('')
 
     function send() {
         const socket = socketStore.socket
-        const user = userStore.user
+        const user = localStorage.getItem('username')
         const message = {
             id: Date.now(),
             user: user,
             text: text,
             roomId: id
         }
-        console.log(message)
-        console.log(socket)
-
         socket.emit('message', message)
+        setText('')
     }
 
     return (
-        <div className={`${styles.send_message_container}`}>
+        <div className={styles.send_message_container}>
                 <textarea
                     className={styles.message_input}
                     placeholder="write text here"
@@ -36,8 +34,7 @@ const SendMessage = () => {
                     }}
 
                 />
-            <br></br>
-            <button onClick={send} className={"my_button"}> Send</button>
+            <button onClick={send} className={`my_button ${styles.send_button}`}>Send</button>
         </div>
     );
 };

@@ -1,27 +1,53 @@
-import React, {useContext, useEffect} from 'react';
-import {Card} from "react-bootstrap";
-import {Context} from "../../index";
+import React, {useEffect, useState} from 'react';
 import styles from './styles.module.css'
 
 const MessageItem = ({message}) => {
-    const {userStore} = useContext(Context)
+    const username = localStorage.getItem('username');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        message.text = breakLongWords(message.text);
+        setLoading(false)
+    }, [message]);
+
+    const breakLongWords = (message) => {
+        let words = message.split(' ');
+        let newMessage = '';
+        for (let word of words) {
+            let newWords = breakWord(word)
+            newMessage += `${newWords} `;
+        }
+        return newMessage.slice(0, -1);
+    }
+
+    const breakWord = (word) => {
+        const maxWordLength = 15;
+        if (word.length > 15) {
+            return `${word.substring(0, maxWordLength)} ${breakWord(word.substring(maxWordLength))} `
+        }
+        return word
+    }
 
     return (
-        <div
-            className={message.user === userStore.user ? `${styles.author_message_container}` : `${styles.not_author_message_container}`}>
-            <Card className={styles.message}>
+        loading ?
+            <div> Loading... </div>
+            :
+            <div
+                className={message.user === username ? `${styles.author_message_container}` : `${styles.not_author_message_container}`}>
                 {
-                    message.user !== userStore.user &&
-                    <Card.Title style={{display: 'flex', margin: 'auto 0', color: 'rgb(57,152,32)'}}>
+                    message.user !== username &&
+                    <h3 className={styles.username}>
                         {message.user}
-                    </Card.Title>
+                    </h3>
                 }
-                <Card.Text>
-                    {message.text}
-                </Card.Text>
-
-            </Card>
-        </div>
+                <div className={styles.message}>
+                    <div className={styles.message_text_wrapper}>
+                        <p className={styles.message_text}>
+                            {message.text}
+                        </p>
+                    </div>
+                </div>
+            </div>
     );
 };
 

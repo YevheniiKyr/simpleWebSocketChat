@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SocketStore from "./store/socketStore";
-import UserStore from "./store/userStore";
 import './global-styles.css';
 export const Context = createContext(null)
 
@@ -13,7 +12,6 @@ root.render(
     <React.StrictMode>
         <Context.Provider value={{
             socketStore: new SocketStore(),
-            userStore: new UserStore()
         }}>
             <App/>
         </Context.Provider>

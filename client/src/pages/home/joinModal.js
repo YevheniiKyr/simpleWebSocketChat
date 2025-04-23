@@ -17,7 +17,7 @@ const JoinModal = ({roomName, show, onHide, onSuccess}) => {
                 </Modal.Header>
 
                 <Modal.Title
-                className = {generalStyles.center}> {`Join "${roomName}" room`}</Modal.Title>
+                className = "center"> {`Join "${roomName}" room`}</Modal.Title>
 
                 <Form.Control
                     id = "input_password"

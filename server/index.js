@@ -48,18 +48,22 @@ io.on('connection', (socket) => {
         }
         users.push(creatorName);
         rooms.push({ name: roomName, password, participants: 1, users: [creatorName]});
-        console.log('new room ', { name: roomName, password, participants: 1, users: [creatorName]})
+        console.log('New room ', { name: roomName, password, participants: 1, users: [creatorName]})
         socket.join(roomName);
+        console.log(`${creatorName} joined room ${roomName}`);
         socket.data.roomName = roomName;
         socket.data.username = creatorName;
-        socket.emit('room_id', { roomId: roomName });
+        socket.emit('room_created', { roomId: roomName });
         socket.emit('rooms', rooms);
     }));
 
     socket.on('join_room', withSocketErrorHandler((data) => {
         const { roomName, password, username } = data;
+        console.log("joinRoom ", roomName, username, roomName);
         const existingRoom = rooms.find(room => room.name === roomName.toString());
+        console.log(existingRoom,  password)
         if (!existingRoom || existingRoom.password !== password) {
+            console.log("invalid_room_name_or_password")
             socket.emit('invalid_room_name_or_password', "Wrong name or password");
             return;
         }
@@ -68,23 +72,23 @@ io.on('connection', (socket) => {
         socket.join(roomName);
         socket.data.roomName = roomName;
         socket.data.username = username;
-        socket.emit('room_id', { roomId: roomName });
+        socket.emit('room_joined', { roomId: roomName });
     }));
 
-    socket.on('rejoin_room', withSocketErrorHandler((data) => {
-        const { username, roomName } = data;
-        const existingRoom = rooms.find(room => room.name === roomName.toString());
-        const existingUsername = existingRoom?.users?.includes(username);
-        if (!existingRoom || !existingUsername) {
-            socket.emit('invalid_room_name_or_password', "Wrong name or password");
-            return;
-        }
-        existingRoom.participants += 1;
-        socket.join(roomName);
-        socket.data.roomName = roomName;
-        socket.data.username = username;
-        socket.emit('room_id', { roomId: roomName });
-    }));
+    // socket.on('rejoin_room', withSocketErrorHandler((data) => {
+    //     const { username, roomName } = data;
+    //     const existingRoom = rooms.find(room => room.name === roomName.toString());
+    //     const existingUsername = existingRoom?.users?.includes(username);
+    //     if (!existingRoom || !existingUsername) {
+    //         socket.emit('invalid_room_name_or_password', "Wrong name or password");
+    //         return;
+    //     }
+    //     existingRoom.participants += 1;
+    //     socket.join(roomName);
+    //     socket.data.roomName = roomName;
+    //     socket.data.username = username;
+    //     socket.emit('room_id', { roomId: roomName });
+    // }));
 
     socket.on('get_messages', withSocketErrorHandler((data) => {
         const { roomId } = data;

@@ -1,28 +1,37 @@
 .my_button {
     color: black;
-    background: #d9deea;
-    border-radius: 20px;
-    padding: 0.1rem;
+    background: #eaecf1;
+    border-radius: 5px;
+    padding: 0.3rem;
     width: 5rem;
-    height: 3rem;
 }
 
 .my_button_small {
-    csolor: black;
+    color: black;
     background: white;
-    border-radius: 20px;
-    padding: 0.2rem;
+    border-radius: 5px;
+    padding: 0.3rem;
     width: 4.5rem;
     height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .my_input {
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0.3rem;
-    width: 25%;
-    height: 5%;
+    width: 7rem;
+    height: 1.5rem;
+    text-align: center;
 }
 
 .center {
     text-align: center;
+}
+
+:root {
+    --background-color: white;
+    --message-color: green;
+    --input-message-backgorund: #105010;
 }

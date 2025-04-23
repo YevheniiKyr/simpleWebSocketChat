@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import Home from "./pages/home";
 import io from 'socket.io-client';
 import {useContext, useEffect} from "react";
@@ -10,14 +9,12 @@ import Chat from "./pages/chat_page";
 
 function App() {
 
-    const {socketStore, userStore} = useContext(Context)
+    const {socketStore} = useContext(Context)
 
     useEffect(() => {
         const socket = io.connect('http://localhost:5000', {'multiplex': false});
         socketStore.setSocket(socket)
-
-    }, [])
-
+    }, [socketStore])
 
 
     return (
@@ -25,19 +22,31 @@ function App() {
             <Router>
                 <Routes>
                     <Route
+                        key='/'
                         path='/'
-                        element={<Home/>}>
+                        element={<Home/>}
+                    >
                     </Route>
+                    {
+                        <Route
+                            key={'/chat/id'}
+                            path={'/chat/:id'}
+                            element={<Chat/>}>
+                        </Route>
+                    }
                     <Route
-                        path={'chat/:id'}
-                        element={<Chat/>}>
+                        key = '*'
+                        path='*'
+                        element={<Navigate to='/' replace/>}
+                    >
                     </Route>
                 </Routes>
             </Router>
 
 
         </div>
-    );
+    )
+        ;
 }
 
 export default App;
