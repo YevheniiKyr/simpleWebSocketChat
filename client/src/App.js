@@ -12,7 +12,7 @@ function App() {
     const {socketStore} = useContext(Context)
 
     useEffect(() => {
-        const socket = io.connect('http://localhost:5000', {'multiplex': false});
+        const socket = io.connect('https://simplewebsocketchat.onrender.com', {'multiplex': false});
         socketStore.setSocket(socket)
     }, [socketStore])
 
