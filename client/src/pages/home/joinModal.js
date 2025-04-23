@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Button, Form, FormText} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import styles from './styles.module.css'
-import generalStyles from '../../global-styles.css'
+
 const JoinModal = ({roomName, show, onHide, onSuccess}) => {
 
     const [password, setPassword] = useState('')
