@@ -22,6 +22,14 @@ const Index = () => {
         console.log("Render home page")
         const socket = socketStore.socket
         if (!socket) return
+        if (localStorage.getItem("room")) {
+            socket.emit('leave_room', {
+                roomName: localStorage.getItem("room"),
+                username: localStorage.getItem("username")
+            });
+            localStorage.removeItem("room")
+        }
+
         if (localStorage.getItem("username")) setRegistered(true)
 
         socket.emit('get_rooms')
@@ -57,6 +65,12 @@ const Index = () => {
             setRooms(rooms)
         })
 
+        socket.on('delete_room', ({roomId}) => {
+            console.log("delete room", roomId)
+            let updatedRooms = rooms.filter(room => room.name !== roomId)
+            setRooms(updatedRooms)
+        })
+
         return () => {
             socket.off('room_already_exists');
             socket.off('invalid_name_or_password');
@@ -71,7 +85,12 @@ const Index = () => {
     function createRoom() {
         if (roomName.trim() !== '') {
             const socket = socketStore.socket
-            socket.emit('create_room', {roomName: roomName, password: roomPassword, creatorName: localStorage.getItem("username")})
+            socket.emit('create_room', {
+                roomName: roomName,
+                password: roomPassword,
+                creatorName: localStorage.getItem("username")
+            })
+            localStorage.setItem("room", roomName)
         } else alert("Can't create room with empty name")
     }
 
@@ -79,14 +98,19 @@ const Index = () => {
         if (password.trim() !== '') {
             const socket = socketStore.socket
             console.log("Emit join room")
-            socket.emit('join_room', {roomName: roomName, password: password, username: localStorage.getItem("username")})
+            socket.emit('join_room', {
+                roomName: roomName,
+                password: password,
+                username: localStorage.getItem("username")
+            })
+            localStorage.setItem("room", roomName)
         } else alert("Password can't be empty")
     }
 
     function register() {
         setUserName(userName.trim())
         if (userName.trim().length >= 3) {
-            socketStore.socket.emit("register", userName)
+            socketStore.socket.emit("register", {username: userName})
             localStorage.setItem("username", userName)
         } else alert("Nickname should be longer than 3 symbols")
     }
@@ -99,7 +123,7 @@ const Index = () => {
                         <div>
                             <div className={styles.create_room_card_container}>
                                 <Card className={styles.create_room_card}>
-                                    <h2  className={styles.create_room_card_header}>Create room</h2>
+                                    <h2 className={styles.create_room_card_header}>Create room</h2>
                                     {
                                         (error !== '') && (
                                             <h5>{error}</h5>
